@@ -1,3 +1,4 @@
+<img src="CCC_apple.png" alt="CCC Apple Logo" width="250">
 # CD Case Creator
 
 **Version 2.0.2**
