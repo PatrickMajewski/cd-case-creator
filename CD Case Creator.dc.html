@@ -31,24 +31,25 @@ html, body { margin: 0; padding: 0; overscroll-behavior: none; touch-action: man
 [data-scroller] { overscroll-behavior: contain; touch-action: pan-y; }
 a { color: var(--color-accent-700); }
 a:hover { color: var(--color-accent); }
-input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; width: 100%; height: 40px; cursor: ew-resize; touch-action: pan-y; }
+input[type=range] { --thumb: 18px; -webkit-appearance: none; appearance: none; background: transparent; width: 100%; height: 40px; cursor: ew-resize; touch-action: pan-y; }
+input[type=range][data-grab] { --thumb: 26px; }
 input[type=range]::-webkit-slider-runnable-track { height: 2px; background: var(--color-divider); }
-input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 30px; margin-top: -14px; background: var(--color-accent); border: 0; border-radius: 3px; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: var(--thumb); height: 30px; margin-top: -14px; background: var(--color-accent); border: 0; border-radius: 3px; }
 input[type=range]::-moz-range-track { height: 2px; background: var(--color-divider); }
-input[type=range]::-moz-range-thumb { width: 18px; height: 30px; background: var(--color-accent); border: 0; border-radius: 3px; }
+input[type=range]::-moz-range-thumb { width: var(--thumb); height: 30px; background: var(--color-accent); border: 0; border-radius: 3px; }
 input[type=range][data-steps]::-webkit-slider-runnable-track {
   height: 6px;
   background:
-    repeating-linear-gradient(to right, var(--color-neutral-500) 0 2px, transparent 2px 25%) 9px 0 / calc(100% - 18px) 100% no-repeat,
-    linear-gradient(var(--color-neutral-500), var(--color-neutral-500)) calc(100% - 11px) 0 / 2px 100% no-repeat,
+    repeating-linear-gradient(to right, var(--color-neutral-500) 0 2px, transparent 2px var(--tick, 25%)) calc(var(--thumb) / 2) 0 / calc(100% - var(--thumb)) 100% no-repeat,
+    linear-gradient(var(--color-neutral-500), var(--color-neutral-500)) calc(100% - var(--thumb) / 2 - 1px) 0 / 2px 100% no-repeat,
     linear-gradient(var(--color-divider), var(--color-divider)) 0 50% / 100% 2px no-repeat;
 }
 input[type=range][data-steps]::-webkit-slider-thumb { margin-top: -12px; }
 input[type=range][data-steps]::-moz-range-track {
   height: 6px;
   background:
-    repeating-linear-gradient(to right, var(--color-neutral-500) 0 2px, transparent 2px 25%) 9px 0 / calc(100% - 18px) 100% no-repeat,
-    linear-gradient(var(--color-neutral-500), var(--color-neutral-500)) calc(100% - 11px) 0 / 2px 100% no-repeat,
+    repeating-linear-gradient(to right, var(--color-neutral-500) 0 2px, transparent 2px var(--tick, 25%)) calc(var(--thumb) / 2) 0 / calc(100% - var(--thumb)) 100% no-repeat,
+    linear-gradient(var(--color-neutral-500), var(--color-neutral-500)) calc(100% - var(--thumb) / 2 - 1px) 0 / 2px 100% no-repeat,
     linear-gradient(var(--color-divider), var(--color-divider)) 0 50% / 100% 2px no-repeat;
 }
 input[type=range]:disabled::-webkit-slider-thumb { background: var(--color-neutral-500); }
@@ -215,10 +216,6 @@ select.input { font-family: var(--font-body); }
         <input type="file" accept="image/*" onChange="{{ onGlossFile }}" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;">
       </div>
 
-      <div data-band="gloss" data-dim="hasGloss">
-        <div class="field" style="margin-bottom:10px;"><label><span data-en="Gloss opacity">Glanz-Deckkraft</span> · <span data-out="glossPct" data-fmt="pct">15</span></label><input type="range" data-steps data-k="glossIdx" min="0" max="4" step="1" onInput="{{ onRange }}"></div>
-        <button type="button" class="btn btn-secondary btn-block" data-mob44 onClick="{{ onRandomizeGloss }}" style="border-radius:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.2" fill="currentColor"/></svg><span data-en="Random reflection">Zufällige Reflexion</span></button>
-      </div>
 
       </div>
 
@@ -439,6 +436,12 @@ select.input { font-family: var(--font-body); }
 
       <button type="button" class="btn btn-secondary btn-block" data-mob44 data-show="canAddText" onClick="{{ onAddText }}" style="border-radius:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg><span data-en="Add text layer">Text-Layer hinzufügen</span></button>
 
+      <div data-dim="hasGloss" style="display:flex;align-items:center;gap:10px;margin-top:8px;">
+        <span style="flex:0 0 auto;font-size:11px;font-weight:700;white-space:nowrap;"><span data-en="Gloss opacity">Glanz-Deckkraft</span> · <span data-out="glossPct" data-fmt="pct">15</span></span>
+        <input type="range" data-grab data-steps data-k="glossIdx" min="0" max="5" step="1" onInput="{{ onRange }}" style="flex:1;min-width:0;--tick:20%;">
+        <button type="button" class="btn btn-secondary btn-icon" data-mob44 onClick="{{ onRandomizeGloss }}" aria-label="Zufällige Reflexion" title="Zufällige Reflexion" style="flex:0 0 auto;border-radius:9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.6-9.6C14.1 5.6 15.3 5 16.6 5H22"/><path d="m18 2 4 3-4 3"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.6c-1.3 0-2.5-.6-3.3-1.7l-.5-.7"/><path d="m18 14 4 3-4 3"/></svg></button>
+      </div>
+
       <div class="hr" style="margin:20px 0 14px;background:var(--color-accent);"></div>
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px;"><span style="font-family:var(--font-heading);font-weight:800;font-size:11px;color:var(--color-accent-700);">03</span><h5 data-en="Selected layer" style="margin:0;">Ausgewählter Layer</h5></div>
       <div data-out="selLabel" style="font-size:13px;font-weight:700;color:var(--color-accent-700);margin-bottom:4px;">–</div>
@@ -461,8 +464,8 @@ select.input { font-family: var(--font-body); }
               <button type="button" class="seg-opt" data-lseg="font" data-val="Archivo" data-off="var(--color-bg)" onClick="{{ onLayerSeg }}" style="min-height:44px;padding:9px 10px;border:1px solid var(--color-divider);border-radius:8px;font-family:'Archivo';font-weight:700;font-size:15px;line-height:1.1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Archivo</button>
             </div>
           </div>
-          <div class="field" style="margin-bottom:8px;"><label><span data-en="Size">Größe</span> · <span data-out="size" data-fmt="px">180</span></label><input type="range" data-k="size" min="24" max="1800" step="2" onInput="{{ onLayerRange }}"></div>
-          <div class="field" style="margin-bottom:8px;"><label><span data-en="Opacity">Deckkraft</span> · <span data-out="opacity" data-fmt="pct">100</span></label><input type="range" data-k="opacity" min="5" max="100" step="1" onInput="{{ onLayerRange }}"></div>
+          <div class="field" style="margin-bottom:8px;"><label><span data-en="Size">Größe</span> · <span data-out="size" data-fmt="px">180</span></label><input type="range" data-grab data-k="size" min="24" max="1800" step="2" onInput="{{ onLayerRange }}"></div>
+          <div class="field" style="margin-bottom:8px;"><label><span data-en="Opacity">Deckkraft</span> · <span data-out="opacity" data-fmt="pct">100</span></label><input type="range" data-grab data-k="opacity" min="5" max="100" step="1" onInput="{{ onLayerRange }}"></div>
           <div class="field" style="margin-bottom:8px;"><label data-en="Colour">Farbe</label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
               <button type="button" class="seg-opt" data-lseg="colorMode" data-val="white" data-off="var(--color-bg)" onClick="{{ onLayerSeg }}" style="min-width:0;display:flex;align-items:center;gap:7px;min-height:44px;padding:9px 10px;border:1px solid var(--color-divider);border-radius:8px;text-align:left;">
@@ -490,11 +493,11 @@ select.input { font-family: var(--font-body); }
           <div data-show="isTextPunch" data-disp="block" style="display:none;font-size:10px;color:var(--color-neutral-700);margin-bottom:8px;"><span data-en="The letters cut the tint away and nothing else — an untinted view of the CD and its stickers. Needs the tint switched on, and only works for text on the case.">Die Buchstaben stanzen nur die Tönung weg — ungetrübter Blick auf die CD und ihre Sticker. Braucht eine eingeschaltete Tönung und gilt nur für Text auf der Hülle.</span></div>
           <div data-show="isTextHue" data-disp="block" style="display:none;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span data-swatch="text" style="width:22px;height:22px;flex-shrink:0;border:1px solid var(--color-divider);border-radius:5px;"></span><span data-swatch="textStroke" style="width:22px;height:22px;flex-shrink:0;border:1px solid var(--color-divider);border-radius:5px;"></span><span data-en="Fill and automatic outline" style="font-size:10px;color:var(--color-neutral-700);">Füllung und automatische Kontur</span></div>
-            <div class="field" style="margin-bottom:8px;"><label><span data-en="Hue">Farbton</span> · <span data-out="hue" data-fmt="deg">0</span></label><input type="range" data-hue data-k="hue" min="0" max="360" step="1" onInput="{{ onLayerRange }}"></div>
-            <div class="field" style="margin-bottom:8px;"><label><span data-en="Saturation">Sättigung</span> · <span data-out="sat" data-fmt="pct">80</span></label><input type="range" data-k="sat" min="0" max="100" step="1" onInput="{{ onLayerRange }}"></div>
-            <div class="field" style="margin-bottom:8px;"><label><span data-en="Lightness">Helligkeit</span> · <span data-out="lig" data-fmt="pct">55</span></label><input type="range" data-k="lig" min="10" max="95" step="1" onInput="{{ onLayerRange }}"></div>
+            <div class="field" style="margin-bottom:8px;"><label><span data-en="Hue">Farbton</span> · <span data-out="hue" data-fmt="deg">0</span></label><input type="range" data-grab data-hue data-k="hue" min="0" max="360" step="1" onInput="{{ onLayerRange }}"></div>
+            <div class="field" style="margin-bottom:8px;"><label><span data-en="Saturation">Sättigung</span> · <span data-out="sat" data-fmt="pct">80</span></label><input type="range" data-grab data-k="sat" min="0" max="100" step="1" onInput="{{ onLayerRange }}"></div>
+            <div class="field" style="margin-bottom:8px;"><label><span data-en="Lightness">Helligkeit</span> · <span data-out="lig" data-fmt="pct">55</span></label><input type="range" data-grab data-k="lig" min="10" max="95" step="1" onInput="{{ onLayerRange }}"></div>
           </div>
-          <div class="field" style="margin-bottom:8px;"><label><span data-en="Outline">Kontur</span> · <span data-out="outline" data-fmt="px">0</span></label><input type="range" data-k="outline" min="0" max="120" step="1" onInput="{{ onLayerRange }}"></div>
+          <div class="field" style="margin-bottom:8px;"><label><span data-en="Outline">Kontur</span> · <span data-out="outline" data-fmt="px">0</span></label><input type="range" data-grab data-k="outline" min="0" max="120" step="1" onInput="{{ onLayerRange }}"></div>
           <div class="field" data-show="isGreenText" data-disp="block" style="display:none;margin-bottom:0;"><label data-en="Position in the stack">Lage im Aufbau</label>
             <div class="seg" style="border-radius:10px;overflow:hidden;width:100%;">
               <button type="button" class="seg-opt" data-lseg="above" data-val="false" data-en="Under the gloss" onClick="{{ onLayerSeg }}" style="flex:1;justify-content:center;font-size:11px;padding:7px 4px;">Unter dem Glanz</button>
@@ -503,10 +506,10 @@ select.input { font-family: var(--font-body); }
           </div>
         </div>
 
-        <div class="field" style="margin-bottom:10px;"><label><span data-en="Scale">Skalierung</span> · <span data-out="scale" data-fmt="x">1.00</span></label><input type="range" data-k="scale" min="0.05" max="8" step="0.01" onInput="{{ onLayerRange }}"></div>
-        <div class="field" style="margin-bottom:10px;"><label><span data-en="Rotation">Drehung</span> · <span data-out="rotate" data-fmt="deg">0</span></label><input type="range" data-k="rotate" min="-180" max="180" step="1" onInput="{{ onLayerRange }}"></div>
-        <div class="field" style="margin-bottom:10px;"><label><span data-en="Position X">Position X</span> · <span data-out="offsetX">0</span></label><input type="range" data-k="offsetX" min="-800" max="800" step="1" onInput="{{ onLayerRange }}"></div>
-        <div class="field" style="margin-bottom:10px;"><label><span data-en="Position Y">Position Y</span> · <span data-out="offsetY">0</span></label><input type="range" data-k="offsetY" min="-800" max="800" step="1" onInput="{{ onLayerRange }}"></div>
+        <div class="field" style="margin-bottom:10px;"><label><span data-en="Scale">Skalierung</span> · <span data-out="scale" data-fmt="x">1.00</span></label><input type="range" data-grab data-k="scale" min="0.05" max="8" step="0.01" onInput="{{ onLayerRange }}"></div>
+        <div class="field" style="margin-bottom:10px;"><label><span data-en="Rotation">Drehung</span> · <span data-out="rotate" data-fmt="deg">0</span></label><input type="range" data-grab data-k="rotate" min="-180" max="180" step="1" onInput="{{ onLayerRange }}"></div>
+        <div class="field" style="margin-bottom:10px;"><label><span data-en="Position X">Position X</span> · <span data-out="offsetX">0</span></label><input type="range" data-grab data-k="offsetX" min="-800" max="800" step="1" onInput="{{ onLayerRange }}"></div>
+        <div class="field" style="margin-bottom:10px;"><label><span data-en="Position Y">Position Y</span> · <span data-out="offsetY">0</span></label><input type="range" data-grab data-k="offsetY" min="-800" max="800" step="1" onInput="{{ onLayerRange }}"></div>
         <button type="button" class="btn btn-secondary btn-block" data-mob44 onClick="{{ onResetSelected }}" style="border-radius:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span data-en="Reset layer">Layer zurücksetzen</span></button>
       </div>
 
@@ -526,25 +529,34 @@ select.input { font-family: var(--font-body); }
             <button type="button" class="seg-opt" data-seg="tintMode" data-val="screen" data-en="Lighten" onClick="{{ onSeg }}" style="flex:1;justify-content:center;font-size:11px;padding:7px 4px;">Aufhellen</button>
           </div>
         </div>
-        <div class="field" style="margin-bottom:8px;"><label><span data-en="Hue">Farbton</span> · <span data-out="tintHue" data-fmt="deg">200</span></label><input type="range" data-hue data-k="tintHue" min="0" max="360" step="1" onInput="{{ onRange }}"></div>
-        <div class="field" style="margin-bottom:8px;"><label><span data-en="Saturation">Sättigung</span> · <span data-out="tintSat" data-fmt="pct">60</span></label><input type="range" data-k="tintSat" min="0" max="100" step="1" onInput="{{ onRange }}"></div>
-        <div class="field" style="margin-bottom:8px;"><label><span data-en="Lightness">Helligkeit</span> · <span data-out="tintLig" data-fmt="pct">50</span></label><input type="range" data-k="tintLig" min="5" max="95" step="1" onInput="{{ onRange }}"></div>
-        <div class="field" style="margin-bottom:0;"><label><span data-en="Strength">Stärke</span> · <span data-out="tintStrength" data-fmt="pct">35</span></label><input type="range" data-k="tintStrength" min="0" max="100" step="1" onInput="{{ onRange }}"></div>
+        <div class="field" style="margin-bottom:8px;"><label><span data-en="Hue">Farbton</span> · <span data-out="tintHue" data-fmt="deg">200</span></label><input type="range" data-grab data-hue data-k="tintHue" min="0" max="360" step="1" onInput="{{ onRange }}"></div>
+        <div class="field" style="margin-bottom:8px;"><label><span data-en="Saturation">Sättigung</span> · <span data-out="tintSat" data-fmt="pct">60</span></label><input type="range" data-grab data-k="tintSat" min="0" max="100" step="1" onInput="{{ onRange }}"></div>
+        <div class="field" style="margin-bottom:8px;"><label><span data-en="Lightness">Helligkeit</span> · <span data-out="tintLig" data-fmt="pct">50</span></label><input type="range" data-grab data-k="tintLig" min="5" max="95" step="1" onInput="{{ onRange }}"></div>
+        <div class="field" style="margin-bottom:0;"><label><span data-en="Strength">Stärke</span> · <span data-out="tintStrength" data-fmt="pct">35</span></label><input type="range" data-grab data-k="tintStrength" min="0" max="100" step="1" onInput="{{ onRange }}"></div>
       </div>
 
       <div class="hr" style="margin:20px 0 14px;background:var(--color-accent);"></div>
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px;"><span style="font-family:var(--font-heading);font-weight:800;font-size:11px;color:var(--color-accent-700);">05</span><h5 data-en="Export" style="margin:0;">Export</h5></div>
+      <div class="seg" style="display:flex;margin-bottom:8px;border-radius:10px;overflow:hidden;">
+        <button type="button" class="seg-opt" data-seg="fmt" data-val="png" onClick="{{ onSeg }}" style="flex:1;">PNG</button>
+        <button type="button" class="seg-opt" data-seg="fmt" data-val="webp" onClick="{{ onSeg }}" style="flex:1;">WebP</button>
+      </div>
+      <p data-show="fmtPng" data-disp="block" style="display:none;margin:0 0 10px;font-size:10px;line-height:1.5;color:var(--color-neutral-700);" data-en="Opens everywhere, including older software. Larger file.">Öffnet sich überall, auch in älteren Programmen. Größere Datei.</p>
+      <p data-hide="fmtPng" style="margin:0 0 10px;font-size:10px;line-height:1.5;color:var(--color-neutral-700);" data-en="Same quality at roughly a third of the size. Read by every current browser and phone; some older image software cannot open it.">Gleiche Qualität bei etwa einem Drittel der Größe. Jeder aktuelle Browser und jedes Telefon lesen es; manche ältere Bildbearbeitung nicht.</p>
       <button type="button" class="btn btn-primary btn-block" data-mob44 onClick="{{ onExport }}" style="border-radius:10px;color:#f8f4f4;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg><span data-en="Export cover">Cover exportieren</span></button>
-      <div class="hr" style="margin:20px 0 14px;background:var(--color-accent);"></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;">
-        <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:var(--font-heading);font-weight:800;font-size:11px;color:var(--color-accent-700);">06</span><h5 data-en="Debugging" style="margin:0;">Debugging</h5></div>
-        <span data-out="errCount" style="font-size:11px;color:var(--color-neutral-700);font-variant-numeric:tabular-nums;">0</span>
+      <div data-show="hasErrors" data-disp="block" style="display:none;">
+        <div class="hr" style="margin:20px 0 14px;background:var(--color-accent);"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;">
+          <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:var(--font-heading);font-weight:800;font-size:11px;color:var(--color-accent-700);">06</span><h5 data-en="Debugging" style="margin:0;">Debugging</h5></div>
+          <span data-out="errCount" style="font-size:11px;color:var(--color-neutral-700);font-variant-numeric:tabular-nums;">0</span>
+        </div>
+        <div data-out="errorText" style="min-height:74px;max-height:190px;overflow-y:auto;padding:10px 12px;border:1px solid var(--color-divider);background:var(--color-neutral-100);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;line-height:1.5;white-space:pre-wrap;word-break:break-word;color:var(--color-text);"></div>
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <button type="button" class="btn btn-secondary" data-mob44 onClick="{{ onCopyErrors }}" style="flex:1;border-radius:9px;font-size:11px;"><span data-en="Copy">Kopieren</span></button>
+          <button type="button" class="btn btn-secondary" data-mob44 onClick="{{ onClearErrors }}" style="flex:1;border-radius:9px;font-size:11px;"><span data-en="Clear">Leeren</span></button>
+        </div>
       </div>
-      <div data-out="errorText" style="min-height:74px;max-height:190px;overflow-y:auto;padding:10px 12px;border:1px solid var(--color-divider);background:var(--color-neutral-100);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;line-height:1.5;white-space:pre-wrap;word-break:break-word;color:var(--color-text);"></div>
-      <div style="display:flex;gap:6px;margin-top:8px;">
-        <button type="button" class="btn btn-secondary" data-mob44 onClick="{{ onCopyErrors }}" style="flex:1;border-radius:9px;font-size:11px;"><span data-en="Copy">Kopieren</span></button>
-        <button type="button" class="btn btn-secondary" data-mob44 onClick="{{ onClearErrors }}" style="flex:1;border-radius:9px;font-size:11px;"><span data-en="Clear">Leeren</span></button>
-      </div>
+
       <div class="hr" style="margin:18px 0 12px;"></div>
       <div style="display:flex;align-items:center;gap:14px;padding-bottom:6px;">
         <img src="assets/logo.png" alt="" style="width:56px;height:56px;flex-shrink:0;display:block;">
@@ -563,7 +575,7 @@ select.input { font-family: var(--font-body); }
 
 class Component extends DCLogic {
   nextId = 1;
-  glossLevels = [0, 0.075, 0.15, 0.225, 0.3];
+  glossLevels = [0, 0.1, 0.2, 0.3, 0.4, 0.5];
   FONTS = { 'Alfa Slab One': 400, 'Anton': 400, 'Archivo': 700, 'Archivo Black': 400, 'Baloo 2': 800, 'Bungee': 400, 'Caveat': 700, 'Pacifico': 400, 'Permanent Marker': 400, 'Rubik Mono One': 400 };
 
   caseImg = null; redMaskImg = null; glossImg = null;
@@ -586,6 +598,7 @@ class Component extends DCLogic {
       selectedLayerId: base.id,
       caseFname: '', redFname: '', glossFname: '',
       glossIdx: 2,
+      fmt: 'png',
       tintOn: false, tintMode: 'multiply', tintHue: 200, tintSat: 60, tintLig: 50, tintStrength: 35,
       stDe: '', stEn: ''
     };
@@ -607,6 +620,20 @@ class Component extends DCLogic {
   maxTexts() { return (this.props && this.props.maxTexts) || 5; }
 
   // ---------- lifecycle ----------
+  // A range input moves to wherever it is tapped. On a scrolling list that means a stray touch
+  // rewrites a value, so a press has to start on the thumb — a generous band around it, not the
+  // 18 visible points — and the rest of the track is inert.
+  onSliderDown = (e) => {
+    const el = e.target;
+    if (el.tagName !== 'INPUT' || el.type !== 'range' || e.pointerType === 'mouse') return;
+    const r = el.getBoundingClientRect();
+    const min = +el.min || 0, max = +el.max || 100;
+    const frac = max > min ? ((+el.value - min) / (max - min)) : 0;
+    const pad = 13;
+    const thumbX = r.left + pad + frac * (r.width - pad * 2);
+    if (Math.abs(e.clientX - thumbX) > 30) { e.preventDefault(); e.stopPropagation(); }
+  };
+
   componentDidMount() {
     for (const k of Object.keys(this)) {
       if (!k.startsWith('on') || typeof this[k] !== 'function') continue;
@@ -627,6 +654,7 @@ class Component extends DCLogic {
     window.addEventListener('mousemove', this.onWindowMouseMove);
     window.addEventListener('mouseup', this.onWindowMouseUp);
     window.addEventListener('resize', this.onResize);
+    this.rootEl && this.rootEl.addEventListener('pointerdown', this.onSliderDown, true);
     window.addEventListener('orientationchange', this.onResize);
     window.addEventListener('error', this.onWindowError);
     this._ovT = setInterval(() => this.dropBundlerOverlay(), 1500);
@@ -667,6 +695,7 @@ class Component extends DCLogic {
     window.removeEventListener('mousemove', this.onWindowMouseMove);
     window.removeEventListener('mouseup', this.onWindowMouseUp);
     window.removeEventListener('resize', this.onResize);
+    this.rootEl && this.rootEl.removeEventListener('pointerdown', this.onSliderDown, true);
     window.removeEventListener('orientationchange', this.onResize);
     window.removeEventListener('error', this.onWindowError);
     clearInterval(this._ovT);
@@ -1767,10 +1796,15 @@ class Component extends DCLogic {
   onExport = () => {
     const canvas = this.out;
     if (!canvas) return;
+    const want = this.state.fmt === 'webp' ? 'image/webp' : 'image/png';
     canvas.toBlob(async (blob) => {
       if (!blob) return;
+      // A browser that cannot write the format silently hands back a PNG — take the name from the
+      // blob, so the extension always matches what is actually inside.
+      const ext = (blob.type || 'image/png').split('/')[1] || 'png';
+      const name = 'cd-case-cover.' + ext;
       const enableShare = (this.props && this.props.enableShareSheet) !== false;
-      const file = new File([blob], 'cd-case-cover.png', { type: 'image/png' });
+      const file = new File([blob], name, { type: blob.type || 'image/png' });
       if (enableShare && typeof navigator !== 'undefined' && navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({ files: [file], title: 'CD Case Creator' });
@@ -1780,11 +1814,11 @@ class Component extends DCLogic {
       }
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'cd-case-cover.png';
+      a.href = url; a.download = name;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 4000);
       this.say('Cover gespeichert.', 'Cover saved.');
-    }, 'image/png');
+    }, want);
   };
 
   // ---------- gestures ----------
@@ -1916,6 +1950,8 @@ class Component extends DCLogic {
       hasSel: !!sel,
       refOpen: !!S.refOpen,
       hasStatus: !!(de ? S.stDe : S.stEn),
+      hasErrors: !!(this._errLog || []).length,
+      fmtPng: S.fmt !== 'webp',
       errCount: String((this._errLog || []).length),
       errorText: (this._errLog || []).length ? this._errLog.join('\n') : (de ? 'Keine Fehler seit dem Laden.' : 'No errors since load.'),
       bandLayerImg: !!sel && sel.kind !== 'text',

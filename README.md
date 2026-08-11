@@ -1,6 +1,6 @@
 # CD Case Creator
 
-**Version 2.0**
+**Version 2.0.2**
 
 [Deutsch](#deutsch) · [English](#english)
 
@@ -41,6 +41,8 @@ Internet und ohne die übrigen Dateien.
   Stanzen sagt, dass es die Hüllen-Tönung braucht, und schaltet sie auf Wunsch gleich ein.
 - **Löschen mit Sicherung.** Der Papierkorb braucht zwei Tipps; dazwischen läuft das Rot des
   Knopfes sichtbar ab.
+- **Export als PNG oder WebP.** WebP liefert dieselbe Qualität bei etwa einem Drittel der Größe;
+  eine Zeile unter der Wahl erklärt beide.
 
 ## Was die App kann
 
@@ -49,11 +51,11 @@ Internet und ohne die übrigen Dateien.
 - **Zehn eingebettete Schriften** mit Kontur, Deckkraft und freier Farbwahl
 - **Hüllen-Tönung** — färbt den Kunststoff samt CD, aber nicht die außen aufgeklebten Sticker
 - **Stanzen** — Text schneidet die Tönung heraus und gibt den klaren Blick darunter frei
-- **Reflexion** mit einstellbarer Stärke und zufälliger Position
+- **Reflexion** mit einstellbarer Stärke in sechs Stufen und zufälliger Position
 - Ziehen, Drehen und Skalieren direkt im Bild, mit Maus oder zwei Fingern
 - **Zoom** bis 800 %, drei Prüfhintergründe
 - **Hell- und Dunkelmodus**, **Deutsch und Englisch**
-- **PNG-Export** in voller Vorlagenauflösung
+- **Export als PNG oder WebP** in voller Vorlagenauflösung
 
 ## Wie es funktioniert
 
@@ -70,7 +72,7 @@ Drei Vorlagen sind eingebaut, alle drei lassen sich gegen eigene Dateien tausche
 
 Dieser Abschnitt ist zugeklappt, weil er im Normalfall nichts braucht: Die drei mitgelieferten
 Vorlagen sind beim Start bereits geladen und richtig. Aufklappen lohnt nur, wer eigene Vorlagen
-einsetzen oder die Reflexion regeln will.
+einsetzen will.
 
 | Layer | Bedeutung |
 | --- | --- |
@@ -80,10 +82,6 @@ einsetzen oder die Reflexion regeln will.
 
 Jede Karte ist gleichzeitig ein Dateifeld: anklicken und eine eigene Datei wählen. Der
 Papierkorb setzt den Layer zurück.
-
-**Glanz-Deckkraft** regelt die Stärke der Reflexion in fünf Stufen.
-**Zufällige Reflexion** verschiebt den Lichtreflex an eine neue Position — mit weichem
-Übergang, nicht als Sprung.
 
 ### 1 · Basis-Motiv einsetzen
 
@@ -107,6 +105,10 @@ Jede Ebene hat eine Werkzeugzeile:
 - **Papierkorb** — Ebene löschen. Der erste Tipp stellt scharf, der zweite löscht: Der Knopf
   färbt sich rot, und das Rot sinkt wie in einer Sanduhr nach unten ab. Läuft es aus, ohne dass
   du erneut tippst, passiert nichts
+
+Unter den Ebenen stehen zwei Regler für die Reflexion: **Glanz-Deckkraft** in sechs Stufen
+von 0 bis 50 %, daneben der Shuffle-Knopf, der den Lichtreflex an eine neue Position setzt —
+mit weichem Übergang, nicht als Sprung.
 
 ### 3 · Text setzen
 
@@ -146,8 +148,16 @@ und Stärke sind frei einstellbar, das Farbfeld zeigt die Mischung live.
 
 ### 6 · Exportieren
 
-**Cover exportieren** speichert das Bild in voller Vorlagenauflösung als PNG. Auf Geräten mit
-Teilen-Funktion öffnet sich das native Teilen-Menü, sonst startet ein direkter Download.
+Zuerst das Format wählen:
+
+- **PNG** — öffnet sich überall, auch in älteren Programmen; größere Datei
+- **WebP** — gleiche Qualität bei etwa einem Drittel der Größe; jeder aktuelle Browser und jedes
+  Telefon lesen es, manche ältere Bildbearbeitung nicht
+
+**Cover exportieren** speichert das Bild in voller Vorlagenauflösung. Auf Geräten mit
+Teilen-Funktion öffnet sich das native Teilen-Menü, sonst startet ein direkter Download. Das
+Teilen-Menü setzt eine gesicherte Verbindung voraus; über eine lokale Adresse fällt der Export
+auf den Download zurück.
 
 ## Vorschau-Werkzeuge
 
@@ -155,6 +165,8 @@ Teilen-Funktion öffnet sich das native Teilen-Menü, sonst startet ein direkter
   lässt sich der Ausschnitt verschieben
 - **Hintergrund** zwischen Schachbrett, Dunkel und Hell umschalten, um Transparenz und helle
   wie dunkle Motive zu beurteilen
+- **Regler** werden am Griff angefasst, nicht auf der Linie angetippt — so verstellt sich beim
+  Scrollen durch die Liste nichts versehentlich
 - Eine **Quittung** blendet über dem Bild kurz auf, wenn etwas geschehen ist, und verschwindet
   von selbst. Im Ruhezustand ist sie nicht da
 
@@ -243,6 +255,8 @@ connection and without the other files.
   needs the case tint and switches it on for you.
 - **Delete with a safety net.** The bin needs two taps, and between them the button's red drains
   away in plain sight.
+- **Export as PNG or WebP.** WebP gives the same quality at roughly a third of the size; a line
+  under the choice explains both.
 
 ## What it does
 
@@ -251,11 +265,11 @@ connection and without the other files.
 - **Ten embedded fonts** with outline, opacity and free colour choice
 - **Case tint** — colours the plastic and the CD behind it, but not stickers stuck on the outside
 - **Punch** — text cuts the tint away and reveals what lies beneath
-- **Reflection** with adjustable strength and a randomised position
+- **Reflection** with adjustable strength in six steps and a randomised position
 - Drag, rotate and scale directly in the artwork, with the mouse or two fingers
 - **Zoom** up to 800 %, three test backgrounds
 - **Light and dark mode**, **German and English**
-- **PNG export** at the template's full resolution
+- **Export as PNG or WebP** at the template's full resolution
 
 ## How it works
 
@@ -271,7 +285,7 @@ Three templates are built in, and all three can be swapped for your own.
 
 This section starts folded away, because normally it needs nothing: the three bundled templates
 are already loaded and correct. Unfold it only to use your own templates or to adjust the
-reflection.
+templates.
 
 | Layer | Meaning |
 | --- | --- |
@@ -280,9 +294,6 @@ reflection.
 | **Reflection / gloss** | The highlight laid over the red zone |
 
 Each card doubles as a file field: click it and pick your own file. The bin resets the layer.
-
-**Gloss opacity** sets the strength of the reflection in five steps.
-**Random reflection** moves the highlight elsewhere — as a soft crossfade, not a jump.
 
 ### 1 · Place the base motif
 
@@ -305,6 +316,10 @@ Each layer has a toolbar:
 - **Bin** — delete the layer. The first tap arms it, the second deletes: the button turns red
   and the red drains downwards like an hourglass. Let it run out without tapping again and
   nothing happens
+
+Below the layers sit two controls for the reflection: **gloss opacity** in six steps from 0 to
+50 %, and next to it the shuffle button, which moves the highlight elsewhere — as a soft
+crossfade, not a jump.
 
 ### 3 · Set type
 
@@ -344,8 +359,15 @@ strength are all adjustable, and the swatch previews the mix live.
 
 ### 6 · Export
 
-**Export cover** saves the image as a PNG at the template's full resolution. On devices with
-a share function the native share sheet opens; otherwise the download starts directly.
+Pick the format first:
+
+- **PNG** — opens everywhere, including older software; larger file
+- **WebP** — same quality at roughly a third of the size; read by every current browser and
+  phone, but not by some older image software
+
+**Export cover** saves the image at the template's full resolution. On devices with a share
+function the native share sheet opens; otherwise the download starts directly. The share sheet
+requires a secure connection; over a local address the export falls back to a download.
 
 ## Preview tools
 
@@ -353,6 +375,8 @@ a share function the native share sheet opens; otherwise the download starts dir
   can be panned
 - **Background** switches between checker, dark and light, to judge transparency and both
   light and dark artwork
+- **Sliders** are grabbed by the handle rather than tapped on the track, so scrolling through
+  the list never changes a value by accident
 - A **receipt** appears briefly over the artwork when something has happened, then goes away on
   its own. At rest it is not there
 
